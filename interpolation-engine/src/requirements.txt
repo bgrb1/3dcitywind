@@ -1,0 +1,17 @@
+pandas==2.0.3
+pyarrow==16.1.0
+cloud-sql-python-connector==1.10.0
+pg8000==1.31.2
+fastapi==0.111.0
+s2geometry==0.9.0
+geojson==3.1.0
+pandasql==0.7.3
+starlette==0.37.2
+uvicorn>=0.30.1
+numpy==1.26.0
+async-lru==2.0.4
+google-cloud-secret-manager==2.20.0
+google-cloud-storage==2.17.0
+google-api-core==2.19.1
+pydantic==2.8.2
+shapely==2.0.4

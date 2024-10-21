@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locust
+      role: master
+  template:
+    metadata:
+      labels:
+        app: locust
+        role: master
+    spec:
+      containers:
+        - name: locust
+          image: europe-west1-docker.pkg.dev/dcitywind/misc/locust:latest
+          args: ["-f", "locustfile.py", "--master", "--web-host", "0.0.0.0"]
+          ports:
+            - containerPort: 8089
+            - containerPort: 5557
+            - containerPort: 5558
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-worker
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: locust
+      role: worker
+  template:
+    metadata:
+      labels:
+        app: locust
+        role: worker
+    spec:
+      containers:
+        - name: locust
+          image: europe-west1-docker.pkg.dev/dcitywind/misc/locust:latest
+          args: ["-f", "locustfile.py", "--worker", "--master-host", "locust-master"]
+          env:
+            - name: LOCUST_MODE
+              value: "worker"
+            - name: LOCUST_MASTER_HOST
+              value: "locust-master"
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
