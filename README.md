@@ -13,7 +13,7 @@ The chunking is done according to the S2 geo-indexing method from Google, which 
 Clients interact with the system through two main http endpoints:
 
 1) POST /covering?resolution=\<resolution> with a GeoJSON body, describing the area viewed by the client as an arbitrary polygon (which enables 3d views with a tilted camera). The response contains all S2 chunk IDs that are needed to cover the requested area, as well as the current sensor data from the reference sensor.
-2) GET /data?cell=<s2_chunk_id>&resolution=<resolution>&ws=<wind_speed_from_sensor>&wd=<wind_direction_from_sensor>, which returns the interpolated wind data for a given S2 chunk as a binary parquet file. 
+2) GET /data?cell=<s2_chunk_id>&resolution=\<resolution>&ws=<wind_speed_from_sensor>&wd=<wind_direction_from_sensor>, which returns the interpolated wind data for a given S2 chunk as a binary parquet file. 
 
 While one could design the API differently, we chose to do it this way to enable automatic client-side caching of S2 chunks by the browser, which improves performance when the view of a user shifts. 
 
