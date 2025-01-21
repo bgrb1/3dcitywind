@@ -1,3 +1,5 @@
+![Architecture Diagram](./architecture.svg)
+
 This repository contains parts of a university group project from the course "Advanced Distributed Systems Prototyping" (Spring 2024). 
 Most of the code that can be found in this repository was written by me. 
 The goal was to develop a web-application to visualize the real-time wind conditions for a city in a 3D model (kinda like Google Earth), backed by a cloud-native backend. I was a member of the backend team.
@@ -21,7 +23,7 @@ While one could design the API differently, we chose to do it this way to enable
 One further optimization that we came up with is that we randomly hold back wind data for each client for up to 1 minute (eventual consistency from client perspective). By doing this, we avoid huge load peaks that would occur everytime the sensor data is updated, as then all chunks have to be interpolated again with the new sensor data and can't be pulled from the CDN or the client-side caches. Holding back the sensor data randomly for each client individually leads to a gradual recompuation of the chunks and an evenly distributed load over time. Through the API-design we still ensured that each client will have a consistent view (all chunks that a single client sees were rendered with the same sensor data), as well as monotonic reads consistency. 
 
 
-The architecture diagram can be seen below. 
+The architecture diagram can be seen abovemar. 
 
 My main contribution was the interpolation engine, which loads the wind model chunks from cloud storage, as well as the sensor data from Postgres, and then uses them to answer the interpolation requests by the clients. I also contributed some things for the generation of the POD models, as can be seen in the "pod" directory. 
 
@@ -29,5 +31,5 @@ Furthermore, I developed a benchmarking tool using "locust", which allows to sim
 During benchmarking, we found that our system can easily serve multiple 100s of concurrent users with 99th percentile latencies below 1s, with one user requiring about up to 1Mb/s of data (assuming the worst case where users request a new random view every second, which doesn't really enable client-side caching). It can probably scale further, but we didn't try since we were on a limited budget 
 
 
-![Architecture Diagram](./architecture.svg)
+
 
